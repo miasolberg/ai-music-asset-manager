@@ -1,0 +1,7 @@
+build/
+.svelte-kit/
+node_modules/
+*.log
+pb_data/*.db
+pb_data/*.db-shm
+pb_data/*.db-wal

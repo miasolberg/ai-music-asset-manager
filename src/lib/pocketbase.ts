@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 import { browser } from '$app/environment';
 
-const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || 'http://192.168.178.5:8090';
+const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || 'http://localhost:8090';
 
 export const pb = new PocketBase(POCKETBASE_URL);
 
