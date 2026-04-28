@@ -29,14 +29,16 @@ export async function register(email: string, password: string, passwordConfirm:
 
 export function logout() {
 	pb.authStore.clear();
-	if (browser) {
-		document.cookie = pb.authStore.exportToCookie({ httpOnly: false });
-	}
 }
 
-// Save auth to cookie
-if (browser) {
-	pb.authStore.onChange(() => {
-		document.cookie = pb.authStore.exportToCookie({ httpOnly: false });
-	});
+// Get auth token for requests
+export function getAuthToken(): string {
+	return pb.authStore.token || '';
+}
+
+// Helper to create authenticated request options
+export function authOptions(): Record<string, string> {
+	return {
+		'Authorization': pb.authStore.token || ''
+	};
 }

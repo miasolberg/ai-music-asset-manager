@@ -21,7 +21,18 @@
 		}
 	});
 	
-	function handleProjectCreated(event) {
+	async function handleProjectCreated(event) {
+		// Add owner field
+		const user = pb.authStore.model;
+		if (user) {
+			try {
+				await pb.collection('projects').update(event.detail.id, {
+					owner: user.id
+				});
+			} catch (err) {
+				console.error('Failed to set owner:', err);
+			}
+		}
 		projects = [event.detail, ...projects];
 		showCreateModal = false;
 	}

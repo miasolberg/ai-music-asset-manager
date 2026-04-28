@@ -56,6 +56,12 @@
       const formData = new FormData();
       formData.append(field, file);
       
+      // Add owner if user is authenticated
+      const user = pb.authStore.model;
+      if (user) {
+        formData.append('owner', user.id);
+      }
+      
       // Simulate progress
       const progressInterval = setInterval(() => {
         if (progress < 90) {

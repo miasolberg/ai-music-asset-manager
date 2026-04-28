@@ -26,7 +26,8 @@
 				bpm: bpm ? parseInt(bpm) : undefined,
 				key: key || undefined,
 				description: description || undefined,
-				status: 'draft'
+				status: 'draft',
+				owner: pb.authStore.model?.id
 			});
 			
 			dispatch('created', project);

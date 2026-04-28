@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { pb } from '$lib/pocketbase';
+	import { pb, getCurrentUser } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 	import AudioPlayer from '$components/AudioPlayer.svelte';
 	import FileUpload from '$components/FileUpload.svelte';
@@ -10,6 +10,8 @@
 	let error = '';
 	let showUploadAudio = false;
 	let showUploadVisual = false;
+	
+	const currentUser = getCurrentUser();
 	
 	async function loadProject() {
 		try {
@@ -29,12 +31,12 @@
 	
 	function handleAudioUpload(event) {
 		showUploadAudio = false;
-		loadProject(); // Reload to show new file
+		loadProject();
 	}
 	
 	function handleVisualUpload(event) {
 		showUploadVisual = false;
-		loadProject(); // Reload to show new file
+		loadProject();
 	}
 </script>
 
