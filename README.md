@@ -2,31 +2,33 @@
 
 Self-hosted web application for managing AI-generated music projects.
 
-## Features
-
-- Project-based song management
-- Audio upload and version tracking
-- Prompt archive for AI generation
-- Lyrics editor
-- Visual asset management (covers, thumbnails)
-- Optional Google Drive sync
-
 ## Tech Stack
 
-- Python + FastAPI
-- SQLite
-- Vanilla JS + Tailwind CSS
-- Docker
+- **Backend:** PocketBase (Auth, DB, File Storage, Realtime)
+- **Frontend:** SvelteKit + Tailwind CSS
+- **Container:** Docker + Docker Compose
+
+## Quick Start
+
+```bash
+# Start services
+docker-compose up -d
+
+# Access PocketBase Admin: http://localhost:8090/_/ (create admin account)
+# Access App: http://localhost:3000
+```
 
 ## Development
 
 ```bash
-# Run locally
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+# Install dependencies
+npm install
 
-# Run with Docker
-docker-compose up -d
+# Start dev server
+npm run dev
+
+# Run tests
+npm test
 ```
 
 ## License
