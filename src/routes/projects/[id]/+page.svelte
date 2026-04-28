@@ -2,12 +2,16 @@
 	import { page } from '$app/stores';
 	import { pb } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
+	import AudioPlayer from '$components/AudioPlayer.svelte';
+	import FileUpload from '$components/FileUpload.svelte';
 	
 	let project = null;
 	let loading = true;
 	let error = '';
+	let showUploadAudio = false;
+	let showUploadVisual = false;
 	
-	onMount(async () => {
+	async function loadProject() {
 		try {
 			const id = $page.params.id;
 			project = await pb.collection('projects').getOne(id, {
@@ -19,7 +23,19 @@
 		} finally {
 			loading = false;
 		}
-	});
+	}
+	
+	onMount(loadProject);
+	
+	function handleAudioUpload(event) {
+		showUploadAudio = false;
+		loadProject(); // Reload to show new file
+	}
+	
+	function handleVisualUpload(event) {
+		showUploadVisual = false;
+		loadProject(); // Reload to show new file
+	}
 </script>
 
 <svelte:head>
@@ -75,28 +91,44 @@
 		<!-- Audio Files -->
 		<div class="bg-surface rounded-xl p-6">
 			<div class="flex items-center justify-between mb-4">
-				<h2 class="text-lg font-semibold text-white">Audio Files</h2>
-				<span class="text-sm text-gray-500">{project.expand?.['audio_files(project)']?.length || 0} files</span>
+				<div>
+					<h2 class="text-lg font-semibold text-white">Audio Files</h2>
+					<span class="text-sm text-gray-500">{project.expand?.['audio_files(project)']?.length || 0} files</span>
+				</div>
+				<button 
+					on:click={() => showUploadAudio = !showUploadAudio}
+					class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+				>
+					{showUploadAudio ? 'Cancel' : 'Upload Audio'}
+				</button>
 			</div>
+			
+			{#if showUploadAudio}
+				<div class="mb-6">
+					<FileUpload 
+						collection="audio_files" 
+						field="file"
+						accept="audio/*"
+						on:upload={handleAudioUpload}
+					/>
+				</div>
+			{/if}
 			
 			{#if project.expand?.['audio_files(project)']?.length > 0}
 				<div class="space-y-3">
 					{#each project.expand['audio_files(project)'] as audio}
-						<div class="flex items-center gap-4 bg-darker rounded-lg p-4">
-							<div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-								<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-								</svg>
-							</div>
-							<div class="flex-1">
-								<p class="text-white font-medium">{audio.version || 'v1'} - {audio.file_type}</p>
-								{#if audio.notes}
-									<p class="text-sm text-gray-500">{audio.notes}</p>
-								{/if}
-							</div>
-							<a href="{pb.files.getUrl(audio, audio.file)}" class="text-primary hover:text-white transition-colors">
-								Download
-							</a>
+						<div class="bg-darker rounded-lg p-4">
+							{#if audio.file}
+								<AudioPlayer 
+									src={pb.files.getUrl(audio, audio.file)}
+									title="{audio.version || 'v1'} - {audio.file_type}"
+								/>
+							{:else}
+								<p class="text-gray-500">No audio file</p>
+							{/if}
+							{#if audio.notes}
+								<p class="text-sm text-gray-500 mt-2">{audio.notes}</p>
+							{/if}
 						</div>
 					{/each}
 				</div>
