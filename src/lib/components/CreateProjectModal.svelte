@@ -126,7 +126,7 @@
 					rows="3"
 					class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none resize-none"
 					placeholder="Project notes..."
-				/></textarea>
+				></textarea>
 			</div>
 			
 			<div class="flex gap-3 pt-4">

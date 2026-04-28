@@ -1,7 +1,7 @@
 <script>
 	export let project;
 	
-	function formatDate(dateString: string) {
+	function formatDate(dateString) {
 		return new Date(dateString).toLocaleDateString('en-US', {
 			year: 'numeric',
 			month: 'short',
@@ -9,7 +9,7 @@
 		});
 	}
 	
-	function getStatusColor(status: string) {
+	function getStatusColor(status) {
 		switch (status) {
 			case 'draft': return 'bg-yellow-500/20 text-yellow-400';
 			case 'in_progress': return 'bg-blue-500/20 text-blue-400';
