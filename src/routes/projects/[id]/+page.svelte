@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import AudioPlayer from '$components/AudioPlayer.svelte';
 	import FileUpload from '$components/FileUpload.svelte';
+	import GoogleDriveSync from '$components/GoogleDriveSync.svelte';
 	
 	let project = null;
 	let loading = true;
@@ -215,6 +216,9 @@
 				<p class="text-gray-500">No visual assets yet.</p>
 			{/if}
 		</div>
+		
+		<!-- Google Drive Sync -->
+		<GoogleDriveSync {project} />
 	</div>
 {:else}
 	<div class="text-center py-20">
