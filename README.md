@@ -119,6 +119,5 @@ git push origin v0.5.0
 
 This builds and pushes a Docker image to `ghcr.io/miasolberg/ai-music-asset-manager`.
 
-## License
+## https://github.com/nickn0w4k/
 
-MIT
