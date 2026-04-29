@@ -1,6 +1,7 @@
 <script>
 	import '../app.css';
 	import Navigation from '$components/Navigation.svelte';
+	import ToastContainer from '$components/ToastContainer.svelte';
 	import { pb } from '$lib/pocketbase';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
@@ -20,3 +21,5 @@
 		<slot />
 	</main>
 </div>
+
+<ToastContainer />

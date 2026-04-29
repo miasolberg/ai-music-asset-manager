@@ -9,6 +9,7 @@
 	import GoogleDriveSync from '$components/GoogleDriveSync.svelte';
 	import EditProjectModal from '$components/EditProjectModal.svelte';
 	import DeleteConfirmModal from '$components/DeleteConfirmModal.svelte';
+	import { toasts } from '$lib/stores/toast';
 	
 	let project = null;
 	let audioFiles = [];
@@ -89,6 +90,7 @@
 	function handleProjectSaved(event) {
 		project = { ...project, ...event.detail };
 		showEditModal = false;
+		toasts.success('Project updated');
 	}
 	
 	async function handleDelete() {
@@ -109,9 +111,11 @@
 			}
 			
 			await pb.collection('projects').delete(project.id);
+			toasts.success('Project deleted');
 			window.location.href = '/';
 		} catch (err) {
 			console.error('Failed to delete project:', err);
+			toasts.error('Failed to delete project');
 		} finally {
 			deleting = false;
 		}
@@ -120,11 +124,13 @@
 	function handleAudioUpload() {
 		showUploadAudio = false;
 		loadProject();
+		toasts.success('Audio uploaded');
 	}
 	
 	function handleVisualUpload() {
 		showUploadVisual = false;
 		loadProject();
+		toasts.success('Visual uploaded');
 	}
 	
 	// Prompt CRUD
@@ -144,6 +150,7 @@
 			promptTags = '';
 			showPromptForm = false;
 			await loadProject();
+			toasts.success('Prompt added');
 		} catch (err) {
 			console.error('Failed to save prompt:', err);
 		} finally {
@@ -155,6 +162,7 @@
 		try {
 			await pb.collection('prompts').delete(id);
 			await loadProject();
+			toasts.success('Prompt deleted');
 		} catch (err) {
 			console.error('Failed to delete prompt:', err);
 		}
@@ -183,6 +191,7 @@
 			lyricsEditingId = null;
 			showLyricsForm = false;
 			await loadProject();
+			toasts.success(lyricsEditingId ? 'Lyrics updated' : 'Lyrics added');
 		} catch (err) {
 			console.error('Failed to save lyrics:', err);
 		} finally {
@@ -201,6 +210,7 @@
 		try {
 			await pb.collection('lyrics').delete(id);
 			await loadProject();
+			toasts.success('Lyrics deleted');
 		} catch (err) {
 			console.error('Failed to delete lyrics:', err);
 		}
@@ -210,6 +220,7 @@
 		try {
 			await pb.collection('audio_files').delete(id);
 			await loadProject();
+			toasts.success('Audio deleted');
 		} catch (err) {
 			console.error('Failed to delete audio:', err);
 		}
@@ -219,6 +230,7 @@
 		try {
 			await pb.collection('visual_assets').delete(id);
 			await loadProject();
+			toasts.success('Visual deleted');
 		} catch (err) {
 			console.error('Failed to delete visual:', err);
 		}
@@ -242,6 +254,7 @@
 			try {
 				await pb.collection('projects').update(project.id, { status: nextStatus });
 				project = { ...project, status: nextStatus };
+				toasts.success(`Status: ${nextStatus.replace('_', ' ')}`);
 			} catch (err) {
 				console.error('Failed to update status:', err);
 			}

@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import ProjectCard from '$components/ProjectCard.svelte';
 	import CreateProjectModal from '$components/CreateProjectModal.svelte';
+	import { toasts } from '$lib/stores/toast';
 
 	let projects = [];
 	let loading = true;
@@ -54,6 +55,7 @@
 		}
 		projects = [event.detail, ...projects];
 		showCreateModal = false;
+		toasts.success('Project created!');
 	}
 </script>
 
