@@ -10,23 +10,23 @@ migrate((app) => {
     updateRule: "@request.auth.id != '' && owner = @request.auth.id",
     deleteRule: "@request.auth.id != '' && owner = @request.auth.id",
     fields: [
-      { name: "title", type: "text", required: true, options: { max: 255 } },
-      { name: "artist", type: "text", required: false, options: { max: 255 } },
-      { name: "genre", type: "text", required: false, options: { max: 100 } },
-      { name: "bpm", type: "number", required: false, options: { min: 0, max: 300 } },
-      { name: "key", type: "text", required: false, options: { max: 50 } },
-      { name: "description", type: "text", required: false, options: { max: 5000 } },
+      { name: "title", type: "text", required: true, max: 255 },
+      { name: "artist", type: "text", required: false, max: 255 },
+      { name: "genre", type: "text", required: false, max: 100 },
+      { name: "bpm", type: "number", required: false, min: 0, max: 300 },
+      { name: "key", type: "text", required: false, max: 50 },
+      { name: "description", type: "text", required: false, max: 5000 },
       {
         name: "status",
         type: "select",
         required: false,
-        options: {
-          maxSelect: 1,
-          values: ["draft", "in_progress", "mastering", "released"]
-        }
+        maxSelect: 1,
+        values: ["draft", "in_progress", "mastering", "released"]
       },
-      { name: "cover", type: "file", required: false, options: { maxSelect: 1, maxSize: 5242880 } },
-      { name: "owner", type: "relation", required: false, options: { maxSelect: 1, collectionId: "_pb_users_auth_" } }
+      { name: "cover", type: "file", required: false, maxSelect: 1, maxSize: 5242880 },
+      { name: "owner", type: "relation", required: false, maxSelect: 1, collectionId: "_pb_users_auth_" },
+      { name: "created", type: "autodate", required: false, onCreate: true, onUpdate: false },
+      { name: "updated", type: "autodate", required: false, onCreate: true, onUpdate: true }
     ]
   });
 
@@ -42,20 +42,20 @@ migrate((app) => {
     updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
-      { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
-      { name: "file", type: "file", required: true, options: { maxSelect: 1, maxSize: 104857600 } },
-      { name: "version", type: "text", required: false, options: { max: 50 } },
+      { name: "project", type: "relation", required: true, maxSelect: 1, collectionId: projects.id },
+      { name: "file", type: "file", required: true, maxSelect: 1, maxSize: 104857600 },
+      { name: "version", type: "text", required: false, max: 50 },
       {
         name: "file_type",
         type: "select",
         required: false,
-        options: {
-          maxSelect: 1,
-          values: ["master", "stem_vocals", "stem_instrumental", "raw", "mix"]
-        }
+        maxSelect: 1,
+        values: ["master", "stem_vocals", "stem_instrumental", "raw", "mix"]
       },
-      { name: "notes", type: "text", required: false, options: { max: 2000 } },
-      { name: "owner", type: "relation", required: false, options: { maxSelect: 1, collectionId: "_pb_users_auth_" } }
+      { name: "notes", type: "text", required: false, max: 2000 },
+      { name: "owner", type: "relation", required: false, maxSelect: 1, collectionId: "_pb_users_auth_" },
+      { name: "created", type: "autodate", required: false, onCreate: true, onUpdate: false },
+      { name: "updated", type: "autodate", required: false, onCreate: true, onUpdate: true }
     ]
   });
 
@@ -71,19 +71,19 @@ migrate((app) => {
     updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
-      { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
-      { name: "prompt_text", type: "text", required: true, options: { max: 10000 } },
+      { name: "project", type: "relation", required: true, maxSelect: 1, collectionId: projects.id },
+      { name: "prompt_text", type: "text", required: true, max: 10000 },
       {
         name: "ai_service",
         type: "select",
         required: false,
-        options: {
-          maxSelect: 1,
-          values: ["Suno", "Udio", "AIVA", "Boomy", "Soundraw", "Other"]
-        }
+        maxSelect: 1,
+        values: ["Suno", "Udio", "AIVA", "Boomy", "Soundraw", "Other"]
       },
-      { name: "tags", type: "text", required: false, options: { max: 500 } },
-      { name: "owner", type: "relation", required: false, options: { maxSelect: 1, collectionId: "_pb_users_auth_" } }
+      { name: "tags", type: "text", required: false, max: 500 },
+      { name: "owner", type: "relation", required: false, maxSelect: 1, collectionId: "_pb_users_auth_" },
+      { name: "created", type: "autodate", required: false, onCreate: true, onUpdate: false },
+      { name: "updated", type: "autodate", required: false, onCreate: true, onUpdate: true }
     ]
   });
 
@@ -99,10 +99,12 @@ migrate((app) => {
     updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
-      { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
-      { name: "content", type: "text", required: true, options: { max: 50000 } },
-      { name: "language", type: "text", required: false, options: { max: 10 } },
-      { name: "owner", type: "relation", required: false, options: { maxSelect: 1, collectionId: "_pb_users_auth_" } }
+      { name: "project", type: "relation", required: true, maxSelect: 1, collectionId: projects.id },
+      { name: "content", type: "text", required: true, max: 50000 },
+      { name: "language", type: "text", required: false, max: 10 },
+      { name: "owner", type: "relation", required: false, maxSelect: 1, collectionId: "_pb_users_auth_" },
+      { name: "created", type: "autodate", required: false, onCreate: true, onUpdate: false },
+      { name: "updated", type: "autodate", required: false, onCreate: true, onUpdate: true }
     ]
   });
 
@@ -118,28 +120,26 @@ migrate((app) => {
     updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
-      { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
-      { name: "file", type: "file", required: true, options: { maxSelect: 1, maxSize: 52428800 } },
+      { name: "project", type: "relation", required: true, maxSelect: 1, collectionId: projects.id },
+      { name: "file", type: "file", required: true, maxSelect: 1, maxSize: 52428800 },
       {
         name: "asset_type",
         type: "select",
         required: false,
-        options: {
-          maxSelect: 1,
-          values: ["cover", "thumbnail", "background", "video_loop", "promo"]
-        }
+        maxSelect: 1,
+        values: ["cover", "thumbnail", "background", "video_loop", "promo"]
       },
       {
         name: "format",
         type: "select",
         required: false,
-        options: {
-          maxSelect: 1,
-          values: ["1:1", "16:9", "9:16", "4:3", "other"]
-        }
+        maxSelect: 1,
+        values: ["1:1", "16:9", "9:16", "4:3", "other"]
       },
-      { name: "alt_text", type: "text", required: false, options: { max: 500 } },
-      { name: "owner", type: "relation", required: false, options: { maxSelect: 1, collectionId: "_pb_users_auth_" } }
+      { name: "alt_text", type: "text", required: false, max: 500 },
+      { name: "owner", type: "relation", required: false, maxSelect: 1, collectionId: "_pb_users_auth_" },
+      { name: "created", type: "autodate", required: false, onCreate: true, onUpdate: false },
+      { name: "updated", type: "autodate", required: false, onCreate: true, onUpdate: true }
     ]
   });
 
