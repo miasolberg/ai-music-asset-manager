@@ -8,6 +8,7 @@
   export let field = 'file';
   export let accept = '*';
   export let maxSize = 104857600; // 100MB
+  export let extraData = {};
   
   let fileInput;
   let isDragging = false;
@@ -55,6 +56,11 @@
     try {
       const formData = new FormData();
       formData.append(field, file);
+      
+      // Add extra data (e.g. project ID)
+      for (const [key, value] of Object.entries(extraData)) {
+        formData.append(key, value);
+      }
       
       // Add owner if user is authenticated
       const user = pb.authStore.model;

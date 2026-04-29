@@ -1,6 +1,13 @@
 // Google Drive API Integration
 // Docs: https://developers.google.com/drive/api/v3/reference
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+declare global {
+	// eslint-disable-next-line no-var
+	var gapi: any;
+}
+
 const GOOGLE_CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
 const GOOGLE_API_KEY = import.meta.env.PUBLIC_GOOGLE_API_KEY || '';
 const GOOGLE_DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
