@@ -261,14 +261,14 @@
 {:else if project}
 	<div class="space-y-8">
 		<!-- Project Header -->
-		<div class="flex items-start justify-between">
-			<div>
-				<h1 class="text-3xl font-bold text-white">{project.title}</h1>
+		<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+			<div class="min-w-0">
+				<h1 class="text-2xl sm:text-3xl font-bold text-white break-words">{project.title}</h1>
 				{#if project.artist}
-					<p class="text-xl text-gray-400 mt-2">{project.artist}</p>
+					<p class="text-lg sm:text-xl text-gray-400 mt-2">{project.artist}</p>
 				{/if}
-				<div class="flex items-center gap-3 mt-4 flex-wrap">
-					<span class="px-4 py-2 rounded-full text-sm font-medium {getStatusColor(project.status)}">
+				<div class="flex items-center gap-2 mt-4 flex-wrap">
+					<span class="px-3 py-1.5 rounded-full text-sm font-medium {getStatusColor(project.status)}">
 						{statusLabels[project.status] || 'Draft'}
 					</span>
 					{#if project.genre}
@@ -284,7 +284,7 @@
 				</div>
 			</div>
 			
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2 flex-wrap">
 				{#if statusFlow.indexOf(project.status || 'draft') < statusFlow.length - 1}
 					<button
 						on:click={advanceStatus}
