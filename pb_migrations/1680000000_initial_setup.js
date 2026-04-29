@@ -4,11 +4,11 @@ migrate((app) => {
   const projects = new Collection({
     name: "projects",
     type: "base",
-    listRule: "",
-    viewRule: "",
-    createRule: "",
-    updateRule: "",
-    deleteRule: "",
+    listRule: "@request.auth.id != '' && owner = @request.auth.id",
+    viewRule: "@request.auth.id != '' && owner = @request.auth.id",
+    createRule: "@request.auth.id != ''",
+    updateRule: "@request.auth.id != '' && owner = @request.auth.id",
+    deleteRule: "@request.auth.id != '' && owner = @request.auth.id",
     fields: [
       { name: "title", type: "text", required: true, options: { max: 255 } },
       { name: "artist", type: "text", required: false, options: { max: 255 } },
@@ -36,11 +36,11 @@ migrate((app) => {
   const audioFiles = new Collection({
     name: "audio_files",
     type: "base",
-    listRule: "",
-    viewRule: "",
-    createRule: "",
-    updateRule: "",
-    deleteRule: "",
+    listRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    viewRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    createRule: "@request.auth.id != ''",
+    updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
       { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
       { name: "file", type: "file", required: true, options: { maxSelect: 1, maxSize: 104857600 } },
@@ -65,11 +65,11 @@ migrate((app) => {
   const prompts = new Collection({
     name: "prompts",
     type: "base",
-    listRule: "",
-    viewRule: "",
-    createRule: "",
-    updateRule: "",
-    deleteRule: "",
+    listRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    viewRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    createRule: "@request.auth.id != ''",
+    updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
       { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
       { name: "prompt_text", type: "text", required: true, options: { max: 10000 } },
@@ -93,11 +93,11 @@ migrate((app) => {
   const lyrics = new Collection({
     name: "lyrics",
     type: "base",
-    listRule: "",
-    viewRule: "",
-    createRule: "",
-    updateRule: "",
-    deleteRule: "",
+    listRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    viewRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    createRule: "@request.auth.id != ''",
+    updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
       { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
       { name: "content", type: "text", required: true, options: { max: 50000 } },
@@ -112,11 +112,11 @@ migrate((app) => {
   const visualAssets = new Collection({
     name: "visual_assets",
     type: "base",
-    listRule: "",
-    viewRule: "",
-    createRule: "",
-    updateRule: "",
-    deleteRule: "",
+    listRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    viewRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    createRule: "@request.auth.id != ''",
+    updateRule: "@request.auth.id != '' && project.owner = @request.auth.id",
+    deleteRule: "@request.auth.id != '' && project.owner = @request.auth.id",
     fields: [
       { name: "project", type: "relation", required: true, options: { maxSelect: 1, collectionId: projects.id } },
       { name: "file", type: "file", required: true, options: { maxSelect: 1, maxSize: 52428800 } },
@@ -157,4 +157,4 @@ migrate((app) => {
       // Collection may not exist, that's fine
     }
   }
-})
+});
