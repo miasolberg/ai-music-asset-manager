@@ -14,13 +14,14 @@
   let volume = 1;
   let isLoading = true;
   let error = '';
+  let isAnalyzing = true;
   
-  // Generate fake waveform data (in real app, analyze audio buffer)
+  // Real waveform data from audio analysis
   let waveformData = [];
+  const WAVEFORM_BARS = 100;
   
   onMount(() => {
     ctx = canvas.getContext('2d');
-    generateWaveform();
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
   });
@@ -30,10 +31,59 @@
     window.removeEventListener('resize', resizeCanvas);
   });
   
-  function generateWaveform() {
-    // Fake waveform - in production, analyze actual audio
-    const bars = 100;
-    waveformData = Array.from({ length: bars }, () => Math.random() * 0.8 + 0.2);
+  async function analyzeAudio() {
+    if (!src) {
+      generateFallbackWaveform();
+      return;
+    }
+    
+    try {
+      isAnalyzing = true;
+      const response = await fetch(src);
+      const arrayBuffer = await response.arrayBuffer();
+      
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      
+      // Get the raw PCM data from the first channel
+      const channelData = audioBuffer.getChannelData(0);
+      const sampleCount = channelData.length;
+      const samplesPerBar = Math.floor(sampleCount / WAVEFORM_BARS);
+      
+      waveformData = [];
+      
+      for (let i = 0; i < WAVEFORM_BARS; i++) {
+        let sum = 0;
+        const start = i * samplesPerBar;
+        const end = Math.min(start + samplesPerBar, sampleCount);
+        
+        // Calculate RMS (root mean square) for each bar segment
+        for (let j = start; j < end; j++) {
+          sum += channelData[j] * channelData[j];
+        }
+        const rms = Math.sqrt(sum / (end - start));
+        
+        // Normalize: RMS values are typically 0-0.5 for most audio, scale to 0-1
+        const normalized = Math.min(1, rms * 4);
+        
+        // Ensure minimum height so bars are always visible
+        waveformData.push(Math.max(normalized, 0.05));
+      }
+      
+      audioContext.close();
+    } catch (err) {
+      console.warn('Failed to analyze audio for waveform, using fallback:', err);
+      generateFallbackWaveform();
+    } finally {
+      isAnalyzing = false;
+      drawWaveform();
+    }
+  }
+  
+  function generateFallbackWaveform() {
+    // Fallback: generate a subtle random waveform when analysis fails
+    waveformData = Array.from({ length: WAVEFORM_BARS }, () => Math.random() * 0.4 + 0.1);
+    isAnalyzing = false;
   }
   
   function resizeCanvas() {
@@ -46,7 +96,7 @@
   }
   
   function drawWaveform() {
-    if (!ctx || !canvas) return;
+    if (!ctx || !canvas || waveformData.length === 0) return;
     
     const width = canvas.width / window.devicePixelRatio;
     const height = canvas.height / window.devicePixelRatio;
@@ -115,11 +165,15 @@
   function handleLoaded() {
     isLoading = false;
     duration = audio.duration || 0;
+    // Start audio analysis once metadata is loaded
+    analyzeAudio();
   }
   
   function handleError() {
     isLoading = false;
     error = 'Failed to load audio';
+    generateFallbackWaveform();
+    drawWaveform();
   }
   
   $: if (isPlaying) {
@@ -139,7 +193,7 @@
         {#if isLoading}
           <svg class="animate-spin w-6 h-6 text-white" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
           </svg>
         {:else if isPlaying}
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,12 +230,19 @@
   </div>
   
   <!-- Waveform -->
-  <canvas
-    bind:this={canvas}
-    on:click={handleSeek}
-    class="w-full h-16 cursor-pointer"
-    style="display: block;"
-  />
+  <div class="relative">
+    <canvas
+      bind:this={canvas}
+      on:click={handleSeek}
+      class="w-full h-16 cursor-pointer"
+      style="display: block;"
+    />
+    {#if isAnalyzing}
+      <div class="absolute inset-0 flex items-center justify-center bg-darker/50">
+        <p class="text-gray-400 text-xs">Analyzing audio...</p>
+      </div>
+    {/if}
+  </div>
   
   {#if error}
     <p class="text-red-400 text-sm">{error}</p>
