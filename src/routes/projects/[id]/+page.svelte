@@ -261,7 +261,7 @@
 {:else if error}
 	<div class="bg-red-500/20 text-red-400 p-4 rounded-lg">{error}</div>
 {:else if project}
-	<div class="space-y-8">
+	<div class="space-y-6 sm:space-y-8">
 		<!-- Project Header -->
 		<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
 			<div class="min-w-0">
@@ -290,20 +290,20 @@
 				{#if statusFlow.indexOf(project.status || 'draft') < statusFlow.length - 1}
 					<button
 						on:click={advanceStatus}
-						class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+						class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 					>
 						Advance → {statusLabels[statusFlow[statusFlow.indexOf(project.status || 'draft') + 1]]}
 					</button>
 				{/if}
 				<button
 					on:click={() => showEditModal = true}
-					class="bg-surface hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-700"
+					class="bg-surface hover:bg-gray-700 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors border border-gray-700"
 				>
 					Edit
 				</button>
 				<button
 					on:click={() => showDeleteModal = true}
-					class="bg-red-600/20 hover:bg-red-600/40 text-red-400 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+					class="bg-red-600/20 hover:bg-red-600/40 text-red-400 px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 				>
 					Delete
 				</button>
@@ -312,14 +312,14 @@
 		
 		<!-- Description -->
 		{#if project.description}
-			<div class="bg-surface rounded-xl p-6">
+			<div class="bg-surface rounded-xl p-4 sm:p-6">
 				<h2 class="text-lg font-semibold text-white mb-3">Description</h2>
 				<p class="text-gray-400 whitespace-pre-wrap">{project.description}</p>
 			</div>
 		{/if}
 		
 		<!-- Audio Files -->
-		<div class="bg-surface rounded-xl p-6">
+		<div class="bg-surface rounded-xl p-4 sm:p-6">
 			<div class="flex items-center justify-between mb-4">
 				<div>
 					<h2 class="text-lg font-semibold text-white">Audio Files</h2>
@@ -327,7 +327,7 @@
 				</div>
 				<button 
 					on:click={() => showUploadAudio = !showUploadAudio}
-					class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+					class="bg-primary hover:bg-blue-600 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 				>
 					{showUploadAudio ? 'Cancel' : 'Upload Audio'}
 				</button>
@@ -362,7 +362,7 @@
 							{/if}
 							<button
 								on:click={() => deleteAudio(audio.id)}
-								class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 p-1"
+								class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center sm:p-1 sm:min-h-0 sm:min-w-0"
 								title="Delete"
 							>
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,7 +378,7 @@
 		</div>
 		
 		<!-- Prompts -->
-		<div class="bg-surface rounded-xl p-6">
+		<div class="bg-surface rounded-xl p-4 sm:p-6">
 			<div class="flex items-center justify-between mb-4">
 				<div>
 					<h2 class="text-lg font-semibold text-white">AI Prompts</h2>
@@ -386,7 +386,7 @@
 				</div>
 				<button 
 					on:click={() => showPromptForm = !showPromptForm}
-					class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+					class="bg-primary hover:bg-blue-600 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 				>
 					{showPromptForm ? 'Cancel' : 'Add Prompt'}
 				</button>
@@ -404,12 +404,12 @@
 							placeholder="Enter the AI prompt used for generation..."
 						></textarea>
 					</div>
-					<div class="grid grid-cols-2 gap-3">
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 						<div>
 							<label class="block text-sm font-medium text-gray-300 mb-1">AI Service</label>
 							<select
 								bind:value={promptService}
-								class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+								class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 							>
 								<option value="">None</option>
 								<option value="Suno">Suno</option>
@@ -425,7 +425,7 @@
 							<input
 								type="text"
 								bind:value={promptTags}
-								class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+								class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 								placeholder="electronic, chill, ambient"
 							/>
 						</div>
@@ -434,14 +434,14 @@
 						<button
 							type="button"
 							on:click={() => { showPromptForm = false; promptText = ''; promptService = ''; promptTags = ''; }}
-							class="px-4 py-2 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors text-sm"
+							class="px-4 py-2 min-h-[44px] border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors text-sm"
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
 							disabled={promptSaving || !promptText.trim()}
-							class="px-4 py-2 bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white text-sm font-medium transition-colors"
+							class="px-4 py-2 min-h-[44px] bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white text-sm font-medium transition-colors"
 						>
 							{promptSaving ? 'Saving...' : 'Save Prompt'}
 						</button>
@@ -454,8 +454,8 @@
 					{#each prompts as prompt}
 						<div class="bg-darker rounded-lg p-4 group">
 							<div class="flex items-start justify-between gap-2">
-								<div class="flex-1">
-									<div class="flex items-center gap-2 mb-2">
+								<div class="flex-1 min-w-0">
+									<div class="flex items-center gap-2 mb-2 flex-wrap">
 										{#if prompt.ai_service}
 											<span class="bg-accent/20 text-accent px-2 py-1 rounded text-xs font-medium">{prompt.ai_service}</span>
 										{/if}
@@ -470,7 +470,7 @@
 								</div>
 								<button
 									on:click={() => deletePrompt(prompt.id)}
-									class="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 p-1"
+									class="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center sm:min-h-0 sm:min-w-0"
 									title="Delete"
 								>
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -487,7 +487,7 @@
 		</div>
 		
 		<!-- Lyrics -->
-		<div class="bg-surface rounded-xl p-6">
+		<div class="bg-surface rounded-xl p-4 sm:p-6">
 			<div class="flex items-center justify-between mb-4">
 				<div>
 					<h2 class="text-lg font-semibold text-white">Lyrics</h2>
@@ -495,7 +495,7 @@
 				</div>
 				<button 
 					on:click={() => { showLyricsForm = true; lyricsEditingId = null; lyricsContent = ''; lyricsLanguage = ''; }}
-					class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+					class="bg-primary hover:bg-blue-600 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 				>
 					Add Lyrics
 				</button>
@@ -518,7 +518,7 @@
 						<input
 							type="text"
 							bind:value={lyricsLanguage}
-							class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+							class="w-full px-4 py-3 bg-surface border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 							placeholder="en, de, es, etc."
 						/>
 					</div>
@@ -526,14 +526,14 @@
 						<button
 							type="button"
 							on:click={() => { showLyricsForm = false; lyricsContent = ''; lyricsLanguage = ''; lyricsEditingId = null; }}
-							class="px-4 py-2 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors text-sm"
+							class="px-4 py-2 min-h-[44px] border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors text-sm"
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
 							disabled={lyricsSaving || !lyricsContent.trim()}
-							class="px-4 py-2 bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white text-sm font-medium transition-colors"
+							class="px-4 py-2 min-h-[44px] bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white text-sm font-medium transition-colors"
 						>
 							{lyricsSaving ? 'Saving...' : (lyricsEditingId ? 'Update Lyrics' : 'Save Lyrics')}
 						</button>
@@ -547,7 +547,7 @@
 						<div class="bg-darker rounded-lg p-4 group">
 							<div class="flex items-start justify-between gap-2">
 								<div class="flex-1 min-w-0">
-									<div class="flex items-center gap-2 mb-2">
+									<div class="flex items-center gap-2 mb-2 flex-wrap">
 										{#if lyric.language}
 											<span class="bg-surface px-2 py-1 rounded text-xs text-gray-400">{lyric.language}</span>
 										{/if}
@@ -558,7 +558,7 @@
 								<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
 									<button
 										on:click={() => editLyrics(lyric)}
-										class="text-gray-400 hover:text-white p-1"
+										class="text-gray-400 hover:text-white p-1 min-h-[44px] min-w-[44px] flex items-center justify-center sm:min-h-0 sm:min-w-0"
 										title="Edit"
 									>
 										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -567,7 +567,7 @@
 									</button>
 									<button
 										on:click={() => deleteLyrics(lyric.id)}
-										class="text-red-400 hover:text-red-300 p-1"
+										class="text-red-400 hover:text-red-300 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center sm:min-h-0 sm:min-w-0"
 										title="Delete"
 									>
 										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -585,7 +585,7 @@
 		</div>
 		
 		<!-- Visual Assets -->
-		<div class="bg-surface rounded-xl p-6">
+		<div class="bg-surface rounded-xl p-4 sm:p-6">
 			<div class="flex items-center justify-between mb-4">
 				<div>
 					<h2 class="text-lg font-semibold text-white">Visual Assets</h2>
@@ -593,7 +593,7 @@
 				</div>
 				<button 
 					on:click={() => showUploadVisual = !showUploadVisual}
-					class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+					class="bg-primary hover:bg-blue-600 text-white px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-colors"
 				>
 					{showUploadVisual ? 'Cancel' : 'Upload Visual'}
 				</button>
@@ -612,7 +612,7 @@
 			{/if}
 			
 			{#if visualAssets.length > 0}
-				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
 					{#each visualAssets as visual}
 						<div class="bg-darker rounded-lg overflow-hidden group relative">
 							{#if visual.file}
@@ -632,7 +632,7 @@
 							</div>
 							<button
 								on:click={() => deleteVisual(visual.id)}
-								class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-600/80 hover:bg-red-600 text-white p-1.5 rounded-full"
+								class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-600/80 hover:bg-red-600 text-white p-1.5 min-h-[44px] min-w-[44px] flex items-center justify-center sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-full"
 								title="Delete"
 							>
 								<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

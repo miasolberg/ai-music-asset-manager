@@ -71,7 +71,7 @@
 
 		<button
 			on:click={() => showCreateModal = true}
-			class="bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 justify-center sm:justify-start"
+			class="bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 justify-center min-h-[44px]"
 		>
 			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -87,7 +87,7 @@
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>
 			<span>{error}</span>
-			<button on:click={() => { error = ''; }} class="ml-auto text-red-300 hover:text-red-200">
+			<button on:click={() => { error = ''; }} class="ml-auto text-red-300 hover:text-red-200 min-h-[44px] min-w-[44px] flex items-center justify-center">
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 				</svg>
@@ -106,12 +106,12 @@
 					type="text"
 					bind:value={searchQuery}
 					placeholder="Search projects..."
-					class="w-full pl-10 pr-4 py-2.5 bg-surface border border-gray-700 rounded-lg text-white text-sm focus:border-primary focus:outline-none placeholder-gray-500"
+					class="w-full pl-10 pr-4 py-2.5 bg-surface border border-gray-700 rounded-lg text-white text-sm focus:border-primary focus:outline-none placeholder-gray-500 min-h-[44px]"
 				/>
 			</div>
 			<select
 				bind:value={statusFilter}
-				class="px-4 py-2.5 bg-surface border border-gray-700 rounded-lg text-white text-sm focus:border-primary focus:outline-none"
+				class="px-4 py-2.5 bg-surface border border-gray-700 rounded-lg text-white text-sm focus:border-primary focus:outline-none min-h-[44px]"
 			>
 				<option value="">All Status</option>
 				<option value="draft">Draft</option>
@@ -131,37 +131,37 @@
 		</div>
 	{:else if projects.length === 0}
 		<!-- Empty State -->
-		<div class="text-center py-20">
-			<div class="w-20 h-20 mx-auto mb-6 bg-surface rounded-full flex items-center justify-center">
+		<div class="text-center py-24 px-4">
+			<div class="w-20 h-20 mx-auto mb-8 bg-surface rounded-full flex items-center justify-center">
 				<svg class="w-10 h-10 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
 				</svg>
 			</div>
 			<h3 class="text-xl font-semibold text-white mb-2">No projects yet</h3>
-			<p class="text-gray-400 mb-6">Create your first music project to get started</p>
+			<p class="text-gray-400 mb-8">Create your first music project to get started</p>
 			<button
 				on:click={() => showCreateModal = true}
-				class="bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+				class="bg-primary hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors min-h-[44px]"
 			>
 				Create First Project
 			</button>
 		</div>
 	{:else if filteredProjects.length === 0}
 		<!-- No results for filter -->
-		<div class="text-center py-16">
+		<div class="text-center py-16 px-4">
 			<svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 			</svg>
 			<p class="text-gray-400">No projects match your search</p>
 			<button
 				on:click={() => { searchQuery = ''; statusFilter = ''; }}
-				class="text-primary hover:text-blue-400 text-sm mt-2"
+				class="text-primary hover:text-blue-400 text-sm mt-2 min-h-[44px]"
 			>
 				Clear filters
 			</button>
 		</div>
 	{:else}
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 			{#each filteredProjects as project (project.id)}
 				<ProjectCard {project} />
 			{/each}

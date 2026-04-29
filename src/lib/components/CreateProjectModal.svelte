@@ -45,12 +45,12 @@
 	}
 </script>
 
-<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-	<div class="bg-surface rounded-2xl w-full max-w-lg mx-4 overflow-hidden">
+<div class="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50">
+	<div class="bg-surface rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[90vh] overflow-y-auto sm:mx-4">
 		<!-- Header -->
-		<div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+		<div class="flex items-center justify-between px-6 py-4 border-b border-gray-800 sticky top-0 bg-surface z-10">
 			<h2 class="text-xl font-semibold text-white">Create New Project</h2>
-			<button on:click={close} class="text-gray-400 hover:text-white">
+			<button on:click={close} class="text-gray-400 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center">
 				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 				</svg>
@@ -71,18 +71,18 @@
 					type="text"
 					bind:value={title}
 					required
-					class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+					class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 					placeholder="My Awesome Track"
 				/>
 			</div>
 			
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				<div>
 					<label class="block text-sm font-medium text-gray-300 mb-2">Artist</label>
 					<input
 						type="text"
 						bind:value={artist}
-						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 						placeholder="Artist Name"
 					/>
 				</div>
@@ -92,19 +92,19 @@
 					<input
 						type="text"
 						bind:value={genre}
-						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 						placeholder="Pop, Rock, Electronic..."
 					/>
 				</div>
 			</div>
 			
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				<div>
 					<label class="block text-sm font-medium text-gray-300 mb-2">BPM</label>
 					<input
 						type="number"
 						bind:value={bpm}
-						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 						placeholder="120"
 					/>
 				</div>
@@ -114,7 +114,7 @@
 					<input
 						type="text"
 						bind:value={key}
-						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none"
+						class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg text-white focus:border-primary focus:outline-none min-h-[44px]"
 						placeholder="C Major"
 					/>
 				</div>
@@ -134,14 +134,14 @@
 				<button
 					type="button"
 					on:click={close}
-					class="flex-1 px-4 py-3 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
+					class="flex-1 px-4 py-3 min-h-[44px] border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
 					disabled={loading || !title}
-					class="flex-1 px-4 py-3 bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white font-medium transition-colors"
+					class="flex-1 px-4 py-3 min-h-[44px] bg-primary hover:bg-blue-600 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg text-white font-medium transition-colors"
 				>
 					{#if loading}
 						<span class="flex items-center justify-center gap-2">
