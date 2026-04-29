@@ -44,7 +44,6 @@
 		
 		try {
 			await register(email, password, confirmPassword, name);
-			await login(email, password);
 			goto('/');
 		} catch (err) {
 			error = err.message || 'Registration failed';

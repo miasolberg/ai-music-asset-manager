@@ -24,12 +24,14 @@ export async function login(email: string, password: string) {
 }
 
 export async function register(email: string, password: string, passwordConfirm: string, name: string) {
-	return await pb.collection('users').create({
+	await pb.collection('users').create({
 		email,
 		password,
 		passwordConfirm,
 		name
 	});
+	// Auto-login after registration
+	return await pb.collection('users').authWithPassword(email, password);
 }
 
 export function logout() {
