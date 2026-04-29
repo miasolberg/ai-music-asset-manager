@@ -60,18 +60,23 @@ vi.mock('pocketbase', () => {
   };
 
   class PocketBaseMock {
-    authStore = authStore;
-    collection = vi.fn(() => collectionMock);
-    autoCancellation = vi.fn();
-    files = {
-      getUrl: vi.fn(
-        (record, filename) =>
-          `http://localhost:8090/api/files/${record.collectionId || 'test'}/${record.id}/${filename}`
-      ),
-    };
+    authStore: typeof authStore;
+    collection: any;
+    autoCancellation: any;
+    files: any;
+    url: string;
 
-    constructor(url) {
+    constructor(url: string) {
       this.url = url;
+      this.authStore = authStore;
+      this.collection = vi.fn(() => collectionMock);
+      this.autoCancellation = vi.fn();
+      this.files = {
+        getUrl: vi.fn(
+          (record: any, filename: string) =>
+            `http://localhost:8090/api/files/${record.collectionId || 'test'}/${record.id}/${filename}`
+        ),
+      };
     }
   }
 
