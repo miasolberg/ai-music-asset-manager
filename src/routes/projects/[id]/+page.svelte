@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { pb, getCurrentUser } from '$lib/pocketbase';
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import AudioPlayer from '$components/AudioPlayer.svelte';
 	import FileUpload from '$components/FileUpload.svelte';
@@ -70,7 +71,12 @@
 			
 			[audioFiles, prompts, lyrics, visualAssets] = await Promise.all(promises);
 		} catch (err) {
-			error = 'Failed to load project';
+			if (err?.status === 403 || err?.status === 401) {
+				error = 'Please log in to view this project.';
+				setTimeout(() => goto('/login'), 2000);
+			} else {
+				error = 'Failed to load project';
+			}
 			console.error(err);
 		} finally {
 			loading = false;

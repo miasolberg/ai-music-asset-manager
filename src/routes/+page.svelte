@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { pb } from '$lib/pocketbase';
+	import { goto } from '$app/navigation';
 	import ProjectCard from '$components/ProjectCard.svelte';
 	import CreateProjectModal from '$components/CreateProjectModal.svelte';
 
@@ -28,7 +29,12 @@
 			projects = result.items;
 		} catch (err) {
 			console.error('Failed to load projects:', err);
-			error = 'Failed to load projects. Please try again.';
+			if (err?.status === 403 || err?.status === 401) {
+				error = 'Please log in to view your projects.';
+				setTimeout(() => goto('/login'), 2000);
+			} else {
+				error = 'Failed to load projects. Please try again.';
+			}
 		} finally {
 			loading = false;
 		}
