@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { pb, getCurrentUser } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
+	import { formatDate } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import AudioPlayer from '$components/AudioPlayer.svelte';
 	import FileUpload from '$components/FileUpload.svelte';
@@ -247,11 +248,6 @@
 		}
 	}
 	
-	function formatDate(dateStr) {
-		return new Date(dateStr).toLocaleDateString('en-US', {
-			year: 'numeric', month: 'short', day: 'numeric'
-		});
-	}
 </script>
 
 <svelte:head>
