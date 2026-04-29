@@ -1,10 +1,20 @@
 <script>
-	import { pb, isAuthenticated, getCurrentUser } from '$lib/pocketbase';
+	import { pb } from '$lib/pocketbase';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	
-	let user = getCurrentUser();
-	let authenticated = isAuthenticated();
+	let user = null;
+	let authenticated = false;
 	let mobileMenuOpen = false;
+	
+	onMount(() => {
+		user = pb.authStore.model;
+		authenticated = pb.authStore.isValid;
+		pb.authStore.onChange((token, record) => {
+			user = record;
+			authenticated = pb.authStore.isValid;
+		});
+	});
 	
 	async function handleLogout() {
 		pb.authStore.clear();
