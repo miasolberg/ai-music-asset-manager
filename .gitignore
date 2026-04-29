@@ -6,3 +6,7 @@ pb_data/
 .env
 .env.local
 .env.*.local
+
+# PocketBase binary and data (local dev only)
+pocketbase_bin/
+pb_data/
