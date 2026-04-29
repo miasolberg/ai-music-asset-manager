@@ -3,11 +3,13 @@
  * These mirror the collections defined in pb_migrations/1680000000_initial_setup.js
  */
 
-/** Base PocketBase record fields */
+/** Base PocketBase record fields (includes PB v0.23+ auto-fields) */
 export interface BaseRecord {
 	id: string;
 	created: string;
 	updated: string;
+	collectionId?: string;
+	collectionName?: string;
 }
 
 /** Project status options */

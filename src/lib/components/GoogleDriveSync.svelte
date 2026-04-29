@@ -350,7 +350,7 @@
       Connect your Google Drive account to sync project files to the cloud.
       {#if !import.meta.env.PUBLIC_GOOGLE_CLIENT_ID}
         <br/><br/>
-        <span class="text-yellow-400">⚠️ Google Drive integration is not configured. Set PUBLIC_GOOGLE_CLIENT_ID in your environment.</span>
+        <span class="text-gray-400">ℹ️ Google Drive integration requires a client ID. Set PUBLIC_GOOGLE_CLIENT_ID in your .env to enable it.</span>
       {/if}
     </p>
   {/if}

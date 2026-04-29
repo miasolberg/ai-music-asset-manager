@@ -60,14 +60,14 @@
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
 				</svg>
-				<span>{project.audio_files?.length || 0} tracks</span>
+				<span>{project.audio_files?.length ? `${project.audio_files.length} track${project.audio_files.length !== 1 ? 's' : ''}` : 'No tracks'}</span>
 			</div>
 			
 			<div class="flex items-center gap-2 text-sm text-gray-400">
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
 				</svg>
-				<span>{project.visual_assets?.length || 0} visuals</span>
+				<span>{project.visual_assets?.length ? `${project.visual_assets.length} visual${project.visual_assets.length !== 1 ? 's' : ''}` : 'No visuals'}</span>
 			</div>
 			
 			<div class="ml-auto text-xs text-gray-500">
