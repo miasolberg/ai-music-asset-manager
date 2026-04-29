@@ -62,6 +62,7 @@ vi.mock('pocketbase', () => {
   class PocketBaseMock {
     authStore = authStore;
     collection = vi.fn(() => collectionMock);
+    autoCancellation = vi.fn();
     files = {
       getUrl: vi.fn(
         (record, filename) =>
