@@ -1,14 +1,8 @@
 <script>
+	import { formatDate } from '$lib/utils';
+
 	export let project;
-	
-	function formatDate(dateString) {
-		return new Date(dateString).toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
-	}
-	
+
 	function getStatusColor(status) {
 		switch (status) {
 			case 'draft': return 'bg-yellow-500/20 text-yellow-400';

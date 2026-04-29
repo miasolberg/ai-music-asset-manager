@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { formatDate } from '$lib/utils';
   import {
     signInWithGoogle,
     signOutGoogle,
@@ -168,12 +169,7 @@
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
-  function formatDate(dateStr) {
-    if (!dateStr) return '—';
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric'
-    });
-  }
+
 </script>
 
 <div class="bg-surface rounded-xl p-6 space-y-4">
